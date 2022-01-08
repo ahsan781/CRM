@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<!-- Required meta tags -->
+{% load static %}
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+
+
+
+<!-- Bootstrap CSS -->
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+
+
+
+<!--fontawesome-->
+
+<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
+
+<!--This is used for search icon. Instead putting icon manually it is loaded from fontawesome-->
+
+
+   <link href="{% static 'css/main.css' %}" rel="stylesheet" media="all">
+
+<title>Schedule</title>
+
+</head>
+<style>
+.card{
+
+border-radius:20px;
+}
+.bg-blue{
+  background-image: url('{% static "images/backgroud.jpg"%}');
+       background-size: 1800px 900px;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-attachment: fixed;
+}
+</style>
+<body>
+<div class="page-wrapper bg-blue  p-t-100 p-b-100 font-robo"  >
+      
+
+        <div class="wrapper wrapper--w680">
+       
+            <div class="card card-1">
+       
+                <div class="card-body">
+       
+                    <h2 class="title">Schedule A Demo Today</h2>
+                <form action="" method="post" autocomplete="off">
+                
+    {% csrf_token %}
+     <div class="form-group">
+    <label for="exampleInputEmail1"> First Name</label>
+    <input type="text" class="form-control" name='field1' id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="First Name" required>
+    
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1"> Last Name</label>
+    <input type="text" class="form-control" name='field2' id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Last Name" required>
+    
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1"> Dealership-or-Group Name</label>
+    <input type="text" class="form-control" name='field3' id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Group Name" required>
+    
+  </div>
+    
+    <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" name='field4' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+    
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1"> Phone Number</label>
+    <input type="text" name='field5' class="form-control" id="exampleInputPassword1" placeholder="Phone No" required>
+  </div>
+
+ 
+  <button type='submit' class="btn btn-primary">Schedule A Demo</button>
+</br>
+</br>
+  <a href='/'> GO To Home Page</a>
+</br>
+<div style='margin-left:10px; color : orange; '> {{sucessMessage}} </div>
+  
+    </form>
+       </br>
+
+       
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

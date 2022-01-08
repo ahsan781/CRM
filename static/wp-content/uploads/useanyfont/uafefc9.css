@@ -1,0 +1,9 @@
+				@font-face {
+					font-family: 'avenirnextltpro-bold';
+					src: url('180528124334AvenirNextLTPro-Bold.woff') format('woff');
+					font-display: auto;
+				}
+
+				.avenirnextltpro-bold{font-family: 'avenirnextltpro-bold' !important;}
+
+		
