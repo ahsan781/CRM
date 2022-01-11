@@ -128,8 +128,8 @@ STATICFILES_DIRS = [
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 #---------------------------------------------------------
-EMAIL_HOST_USER = 'ahsanaziz895@gmail.com'
-EMAIL_HOST_PASSWORD = 'ahs@8951'
+EMAIL_HOST_USER = 'sales@thekpadvantage.com'
+EMAIL_HOST_PASSWORD = 'Advantage123**'
 #---------------------------------------------------------
 EMAIL_PORT = 587
 # Default primary key field type

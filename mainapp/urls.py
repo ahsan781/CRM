@@ -15,5 +15,6 @@ urlpatterns = [
                                   path('Approvecontent/', views.ApproveContent, name='Approvecontent'),
                                     path('calenderview/', views.calenderview, name='calenderview'),
                                         path('contactus/', views.contactus, name='contactus'),
+                                         path('starttoday/', views.starttoday, name='starttoday'),
 
 ]

@@ -23,10 +23,10 @@ def  signup(request):
         message2 = 'Sender Name:......' +  fname  + '\n' + 'Sender EmailAdress:.........' +  email + '\n'+ 'Sender Phone:......' + phoneno + '\n'+  'Sender Dealership Name:.......' + dealership  
         f_email = email
         send_mail(
-              mail_subject,  message2, f_email , ['ahsanaziz895@gmail.com']
+              mail_subject,  message2, f_email , ['sales@thekpadvantage.com']
 
         )
-        SuccessMessage  =  "your message is send to team , Team will contact you soon" 
+        SuccessMessage  =  " member of our team will contact you soon" 
         context = {'sucessMessage' : SuccessMessage}
         return render(request, 'signup.html' ,context)
 
@@ -56,6 +56,30 @@ def ApproveContent(request):
     return render(request, 'dashboard/Approvecontent.html')
 def calenderview(request):
     return render(request, 'dashboard/calenderview.html')
+def starttoday(request):
+    if request.method == 'POST':
+        fname = request.POST ['field1']
+        lname = request.POST ['field2']
+        dealership = request.POST ['field3']
+        email = request.POST['field4']
+        phoneno = request.POST ['field5']
+        message1 = request.POST ['field6']
+        subject = request.POST ['field9']
+
+        #SEND AN EMAIL
+        mail_subject = subject
+        message2 = 'Sender Name:......' +  fname  + '\n' + 'Sender EmailAdress:.........' +  email + '\n'+ 'Sender Phone:......' + phoneno + '\n'+  'Sender Dealership Name:.......' + dealership  + '\n' +  'Sender Subject:.......' +  subject + '\n' + 'Sender Question:.......' +  message1
+        f_email = email
+        send_mail(
+              mail_subject,  message2, f_email , ['sales@thekpadvantage.com']
+
+        )
+        SuccessMessage  =  " member of our team will contact you soon" 
+        context = {'sucessMessage' : SuccessMessage}
+        return render(request, 'starttoday.html' ,context)
+
+    else:
+        return render(request, 'starttoday.html')
 
 def contactus(request):
     if request.method == 'POST':
@@ -72,10 +96,10 @@ def contactus(request):
         message2 = 'Sender Name:......' +  fname  + '\n' + 'Sender EmailAdress:.........' +  email + '\n'+ 'Sender Phone:......' + phoneno + '\n'+  'Sender Dealership Name:.......' + dealership  + '\n' +  'Sender Subject:.......' +  subject + '\n' + 'Sender Question:.......' +  message1
         f_email = email
         send_mail(
-              mail_subject,  message2, f_email , ['ahsanaziz895@gmail.com']
+              mail_subject,  message2, f_email , ['sales@thekpadvantage.com']
 
         )
-        SuccessMessage  =  "your message is send to team , Team will contact you soon" 
+        SuccessMessage  =  " member of our team will contact you soon" 
         context = {'sucessMessage' : SuccessMessage}
         return render(request, 'contactus.html' ,context)
 
