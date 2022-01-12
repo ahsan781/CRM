@@ -26,7 +26,7 @@ def  signup(request):
               mail_subject,  message2, f_email , ['sales@thekpadvantage.com']
 
         )
-        SuccessMessage  =  " member of our team will contact you soon" 
+        SuccessMessage  =  "A member of our team will contact you soon" 
         context = {'sucessMessage' : SuccessMessage}
         return render(request, 'signup.html' ,context)
 
@@ -74,7 +74,7 @@ def starttoday(request):
               mail_subject,  message2, f_email , ['sales@thekpadvantage.com']
 
         )
-        SuccessMessage  =  " member of our team will contact you soon" 
+        SuccessMessage  =  "A member of our team will contact you soon" 
         context = {'sucessMessage' : SuccessMessage}
         return render(request, 'starttoday.html' ,context)
 
@@ -99,7 +99,7 @@ def contactus(request):
               mail_subject,  message2, f_email , ['sales@thekpadvantage.com']
 
         )
-        SuccessMessage  =  " member of our team will contact you soon" 
+        SuccessMessage  =  "A member of our team will contact you soon" 
         context = {'sucessMessage' : SuccessMessage}
         return render(request, 'contactus.html' ,context)
 
