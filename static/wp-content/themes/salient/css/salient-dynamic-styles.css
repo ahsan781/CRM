@@ -429,7 +429,7 @@ body.original .bypostauthor .comment-body:before,
 .widget_layered_nav ul.yith-wcan-label .chosen a,
 .nectar-next-section-wrap.bounce a:before,
 body .nectar-button.see-through-2[data-hover-color-override="false"]:hover {
-  background-color: #00a79d !important;
+  background-color: #a70000 !important;
 }
 #header-outer #top nav > ul > li:not(.megamenu) ul a:hover,
 #header-outer:not([data-format="left-header"])
