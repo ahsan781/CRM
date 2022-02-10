@@ -33,58 +33,46 @@
                         <!-- project card -->
                         <div class="card d-block">
                             <div class="card-body">
-                                <form>
-                                        
-                                    <div class="form-group row">
-                                      <label for="inputPassword" class="col-sm-2 col-form-label">Add Note</label>
-                                    </br>
-                                      <div class="col-sm-10">
-                                        <textarea type="text" class="form-control" id="inputPassword" ></textarea>
-                                      </div>
-                                    </div>
-                                  </form>
+                                <h5 class="card-title mb-3">Attachments</h5>
+                                      {% if updatestrategy %}
+                                           
+                                <form action="" method="post" name="reg" role="form"    enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                
+                        
+
+                                <label>Comment:</label>
+                        
+                                <input type="text" class="form-control" name="note" id="username" value={{updatestrategy.comment}}required>
                                 </br>
-                                  <button type="button" class="btn btn-success">Save</button>
+                                <button type="submit" class="btn btn-danger">Update</button>
+                                </form>
+
+
+                            {% else %}
+
+                            <form action="" method="post" name="reg" role="form"    enctype="multipart/form-data">
+                                {% csrf_token %}
+    
+
+                                <label>Comment:</label>
+                        
+                                <input type="text" class="form-control" name="note" id="username" placeholder="Comment" required>
+                            </br>
+                            <button type="submit" class="btn btn-danger">Save</button>
+                                
                             </form>
-                            </div>
+
+
+
+
+                                {% endif %}
                         </div> <!-- end card-->
 
                        
                         <!-- end card-->
                     </div> <!-- end col -->
 
-                    <div class="col-xxl-4 col-xl-5">
-
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title mb-3">Attachments</h5>
-
-                                <form action="https://coderthemes.com/" method="post" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews"
-                                    data-upload-preview-template="#uploadPreviewTemplate">
-                                    <div class="fallback">
-                                        <input name="file" type="file" />
-                                    </div>
-
-                                    <div class="dz-message needsclick">
-                                        <i class="h3 text-muted dripicons-cloud-upload"></i>
-                                        <h4>Drop files here or click to upload.</h4>
-                                    </div>
-                                </form>
-
-                                <!-- Preview -->
-                                <div class="dropzone-previews mt-3" id="file-previews"></div>
-
-                                <!-- file preview template -->
-                             
-                                <!-- end file preview template -->
-
-
-
-                              
-
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!-- end row -->
                 

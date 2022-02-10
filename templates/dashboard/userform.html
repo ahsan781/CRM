@@ -1,0 +1,92 @@
+{% extends 'dashboard/index.html' %}
+{% block title %} FormPage {% endblock title %}
+{% block body %}
+{% load static %}
+
+<div class="wrapper">
+       
+
+    <div class="content-page">
+      <div class="content">
+        <div class="container-fluid">
+                           
+                           <!-- start page title -->
+                           <div class="row">
+                               <div class="col-12">
+                                   <div class="page-title-box">
+                                       <div class="page-title-right">
+                                           
+                                       </div>
+                                       <h4 class="page-title">User UpdateForm</h4>
+                                   </div>
+                               </div>
+                           </div> 
+                           
+                           <div class="row">
+                               <div class="col-12">
+                                   <div class="card">
+                                       <div class="card-body">
+                <form action="" method="post" autocomplete="off"  enctype="multipart/form-data">
+                  {% csrf_token %}
+                    <div class="form-group">
+                        <label style='font-weight:bold;'>UserName</label>
+                        <input type="text" class="form-control" name="username" id="username"  value={{usertype.user}} required>
+                      </div>
+                    </br>
+                    <div class="form-group">
+                      <label for="userType">Select User Type</label>
+                       <select name="ut" class="form-control" onchange="ChangeDropdowns(this.value);">
+                              {% if usertype.user_type == 'Admin'  %}
+                                 <option class="form-control" selected>Admin</option>
+                                 <option class="form-control" >Employee</option>
+                                 <option class="form-control" >User</option>
+
+                                 {% endif %}
+                                {% if usertype.user_type == 'Employee'   %}
+                                <option class="form-control" >Admin</option>
+                                <option class="form-control" selected>Employee</option>
+                               
+                                 <option class="form-control" >User</option>
+                                {% endif %}
+                                {% if usertype.user_type == 'User'   %}
+                                <option class="form-control" >Admin</option>
+                                <option class="form-control" >Employee</option>
+                                <option class="form-control" selected>User</option>
+
+                              {% endif %}
+                           
+                            </select>
+                     </div> 
+                    </br> 
+                      <div class="form-group">
+                        <label style='font-weight:bold;'>UserEmail</label>
+                        <input type="text" class="form-control" name="email" id="email"  value={{usertype.user.email}} required>
+                      </div> 
+                    </br>
+                     
+  
+     <div class="p-t-20">
+        <button class="btn btn-primary" type="submit">Update</button>
+            </div>
+            {% for message in messages %}
+                           <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                       
+                             {% if message.tags == "success" %}
+                             <strong>Well done!</strong> {{ message}}
+                             {% else %}
+                             <strong>Error!</strong> {{ message}}
+                             {% endif %}
+                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                           </div>
+                           {% endfor %} 
+                      </form>
+    </form>
+</div>
+</div>
+</div>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

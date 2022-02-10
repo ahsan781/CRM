@@ -58,45 +58,49 @@ border-radius:20px;
        
                 <div class="card-body">
        
-                    <h2 class="title">Schedule A Demo Today</h2>
-                <form action="" method="post" autocomplete="off">
-                
-    {% csrf_token %}
-     <div class="form-group">
-    <label for="exampleInputEmail1"> First Name</label>
-    <input type="text" class="form-control" name='field1' id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="First Name" required>
-    
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1"> Last Name</label>
-    <input type="text" class="form-control" name='field2' id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Last Name" required>
-    
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1"> Dealership-or-Group Name</label>
-    <input type="text" class="form-control" name='field3' id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Group Name" required>
-    
-  </div>
-    
-    <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" name='field4' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
-    
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1"> Phone Number</label>
-    <input type="text" name='field5' class="form-control" id="exampleInputPassword1" placeholder="Phone No" required>
-  </div>
-
- 
-  <button type='submit' class="btn btn-primary">Schedule A Demo</button>
-</br>
-</br>
-  <a href='/'> GO To Home Page</a>
-</br>
-<div style='margin-left:10px;  color:#f41431;  '> {{sucessMessage}} </div>
-  
-    </form>
+                    <h2 class="title">Signup Today</h2>
+                    <form action="" method="post" name="reg" role="form" class="php-email-form">
+                      {% csrf_token %}
+                      
+                        <div class="form-group">
+                          <input type="text" class="form-control" name="username" id="username" placeholder="User Name" required>
+                        </div>
+                         <div class="form-group">
+                          <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+                        </div>
+                         <div class="form-group">
+                         <label for="userType">Select User Type</label>
+                          <select name="user_type" class="form-control" onchange="ChangeDropdowns(this.value);">
+                                    <option class="form-control">Admin</option>
+                                   <option class="form-control">Employee</option>
+                                   <option class="form-control">User</option>
+          
+                               </select>
+                        </div>
+                        
+                         <div class="form-group">
+                          <input type="Password" class="form-control" name="password" id="password" placeholder="Password" required>
+                        </div>
+                         <div class="form-group">
+                          <input type="Password" class="form-control" name="cpassword" id="cpassword" placeholder="Confirm Password" required>
+                        </div>
+                        
+                        
+                        <div class="text-center"><button type="submit" class="btn btn-primary">SignUp</button></div>
+                        
+                           <p> You have Already Register <a  href="{% url 'signin' %}" style='color:blue'>Login</a></p>
+                           {% for message in messages %}
+                           <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                       
+                             {% if message.tags == "success" %}
+                             <strong>Well done!</strong> {{ message}}
+                             {% else %}
+                             <strong>Error!</strong> {{ message}}
+                             {% endif %}
+                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                           </div>
+                           {% endfor %} 
+                      </form>
        </br>
 
        

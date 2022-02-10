@@ -36,18 +36,20 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title mb-3">Upload Logo</h5>
-
-                                <form action="https://coderthemes.com/" method="post" class="dropzone" id="myAwesomeDropzone" data-plugin="dropzone" data-previews-container="#file-previews"
-                                    data-upload-preview-template="#uploadPreviewTemplate">
+                            
+                                <form action="" method="post" name="reg" role="form"  class="dropzone"  enctype="multipart/form-data">
+                                    {% csrf_token %}
                                     <div class="fallback">
-                                        <input name="file" type="file" />
+                                        <input type ="file" name ="file1"  required/>
                                     </div>
 
                                     <div class="dz-message needsclick">
                                         <i class="h3 text-muted dripicons-cloud-upload"></i>
                                         <h4>Drop files here or click to upload.</h4>
                                     </div>
+                                    <button type="Submit" class="btn btn-danger">Upload Logo</button>
                                 </form>
+                           
                               <!-- Preview -->
                                 <div class="dropzone-previews mt-3" id="file-previews"></div>
 
@@ -56,7 +58,7 @@
                                 <!-- end file preview template -->
 
 
-                                <button type="button" class="btn btn-danger">Delete Logo</button>
+                           
                                 
                               
 

@@ -1,0 +1,449 @@
+{% extends 'dashboard/index.html' %}
+{% block title %} {% endblock title %}
+{% block style_head %}
+<style>
+    .fblogin {
+        background: #3b84c3;
+        color: white;
+        padding: 5px;
+    }
+
+    .fblogin:hover {
+        color: #e9e9f1;
+    }
+
+    .btn-close {
+        margin: 0 !important;
+    }
+
+    .form-select {
+        margin-left: auto;
+        width: 140px;
+        height: fit-content;
+        align-self: center;
+    }
+
+    .chart-loading {
+
+        display: none;
+        height: 400px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .chart-loading1 {
+
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .chartWrapper {
+        position: relative;
+    }
+
+    .chartWrapper>canvas {
+        position: absolute;
+        left: 0;
+        top: 0;
+        pointer-events: none;
+    }
+
+    .chartAreaWrapper {
+        /* width: 600px;*/
+        overflow-x: scroll;
+    }
+</style>
+{% endblock style_head %}
+{% block endscript %}
+
+<script>
+    var ctx = document.getElementById('myChart');
+    var myChart = new Chart(ctx, {});
+    var loading = document.getElementById('chart-loading');
+    var chat_selector = document.getElementById('chart-selector');
+    var data_selector = document.getElementById('data-selector');
+    data_selector.selectedIndex = 0;
+
+
+    function callchart(e) {
+        chat_selector.selectedIndex = 0;
+        //console.log(e.getAttribute("data-key"));
+        destroyChart();
+        loading.style.display = "flex";
+        chat_selector.style.display = "none";
+        document.getElementById("chart-selector").setAttribute("data-info", e.getAttribute("data-info"));
+        fetch(`/api/fb/page/chart/{{id}}/${e.getAttribute("data-key")}/7/`, {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(result => {
+                loading.style.display = "none";
+                chat_selector.style.display = "block";
+
+                setChart(result.labels, e.getAttribute("data-info"), result.values, e);
+            })
+
+
+    }
+
+    function getchart(e) {
+        destroyChart();
+        //console.log(e.getAttribute("data-key"));
+        loading.style.display = "flex";
+        chat_selector.style.display = "none";
+
+
+        fetch(`/api/fb/page/chart/{{id}}/${e.getAttribute("data-key")}/${e.value}/`, {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(result => {
+                loading.style.display = "none";
+                chat_selector.style.display = "block";
+                setChart(result.labels, e.getAttribute("data-info"), result.values, e);
+            })
+    }
+
+    function destroyChart() {
+        if (window.myChart != null) {
+            window.myChart.destroy();
+        }
+    }
+
+    function setChart(labels, lable, value, e) {
+        document.getElementById("modal-title").innerHTML = e.getAttribute("data-info");
+        document.getElementById("chart-selector").setAttribute("data-key", e.getAttribute("data-key"));
+
+        myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: lable,
+                    data: value,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function getdata(e) {
+        document.querySelectorAll(".d-value").forEach(ele => {
+            ele.style.visibility = "hidden";
+            ele.style.height = "0";
+        })
+        document.querySelectorAll(".chart-loading1").forEach(ele => {
+            ele.style.display = "flex";
+        })
+        fetch(`/api/fb/page/data/{{id}}/${e.value}/`, {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(result => {
+                //console.log(result)
+                document.querySelectorAll(".d-value").forEach(ele => {
+                    //console.log(ele.dataset.id)
+                    if (ele.dataset.id === "page_post_engagements") {
+                        ele.innerHTML = result.page_post_engagements;
+                    }
+                    if (ele.dataset.id === "page_views_total") {
+                        ele.innerHTML = result.page_views_total;
+                    }
+                    if (ele.dataset.id === "page_total_actions") {
+                        ele.innerHTML = result.page_total_actions;
+                    }
+                    if (ele.dataset.id === "page_fans") {
+                        ele.innerHTML = result.page_fans;
+                    }
+                    if (ele.dataset.id === "page_actions_post_reactions_like_total") {
+                        ele.innerHTML = result.page_actions_post_reactions_like_total;
+                    }
+                    if (ele.dataset.id === "page_impressions") {
+                        ele.innerHTML = result.page_impressions;
+                    }
+                })
+                document.querySelectorAll(".d-value").forEach(ele => {
+                    ele.style.visibility = "visible";
+                    ele.style.height = "auto";
+                })
+                document.querySelectorAll(".chart-loading1").forEach(ele => {
+                    ele.style.display = "none";
+                })
+
+            })
+    }
+</script>
+{% endblock endscript %}
+{% block body %}
+{% load static %}
+
+<div class="wrapper">
+
+
+    <div class="content-page">
+        <div class="content">
+            <!-- Topbar Start -->
+
+            <!-- end Topbar -->
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <div class="page-title-right">
+
+                                {% comment %} <form class="d-flex">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control form-control-light" id="dash-daterange">
+                                        <span class="input-group-text bg-primary border-primary text-white">
+                                            <i class="mdi mdi-calendar-range font-13"></i>
+                                        </span>
+                                    </div>
+                                    <a href="javascript: void(0);" class="btn btn-primary ms-2">
+                                        <i class="mdi mdi-autorenew"></i>
+                                    </a>
+                                </form> {% endcomment %}
+                            </div>
+                            <div class="d-flex">
+                                <h4 class="page-title">Facebook Analytics</h4>
+                                <select id="data-selector" class="form-select" onchange="getdata(this)">
+                                    <option value="0">Today</option>
+                                    <option value="1">Yesterday</option>
+                                    <option value="7">Last 7 days</option>
+                                    <option value="28">Last 28 days</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% comment %} {{}} {% endcomment %}
+                <!-- end page title -->
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                        <a class="" data-bs-toggle="modal" id="" data-info="Page Engagement" data-key="engagement"
+                            onclick="callchart(this);" href="#chart-modal" role="button">
+
+                            <div class="card tilebox-one">
+                                <div class="card-body">
+
+                                    <h5 class="text-uppercase mt-0">Page engagement</h5>
+                                    {% comment %} <h6 class="text-uppercase mt-0">Date Range</h6> {% endcomment %}
+                                    <div class="chart-loading1" id="">
+                                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+
+                                        </div>
+                                    </div>
+                                    <h2 class="my-2 d-value" data-id="page_post_engagements">{{page_post_engagements}}
+                                    </h2>
+                                    <p class="mb-0 text-muted" title="Up 100% Compared to previous 7 days.">
+                                        <span class="text-nowrap">Page engagement</span>
+                                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span>
+                                            5.27%</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                        <a class="" data-bs-toggle="modal" id="" data-info="Page views" onclick="callchart(this);"
+                            data-key="views" href="#chart-modal" role="button">
+                            <div class="card tilebox-one">
+                                <div class="card-body">
+
+                                    <h5 class="text-uppercase mt-0">Page views</h5>
+                                    {% comment %} <h6 class="text-uppercase mt-0">Date Range</h6> {% endcomment %}
+                                    <div class="chart-loading1" id="">
+                                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+
+                                        </div>
+                                    </div>
+                                    <h2 class="my-2 d-value" data-id="page_views_total">{{page_views_total}}</h2>
+                                    <p class="mb-0 text-muted" title="Up 100% Compared to previous 7 days.">
+                                        <span class="text-nowrap">Page views</span>
+                                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span>
+                                            5.27%</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                        <a class="" data-bs-toggle="modal" id="" data-info="Page clicks" onclick="callchart(this);"
+                            data-key="clicks" href="#chart-modal" role="button">
+                            <div class="card tilebox-one">
+                                <div class="card-body">
+
+                                    <h5 class="text-uppercase mt-0">Page clicks</h5>
+                                    {% comment %} <h6 class="text-uppercase mt-0">Date Range</h6> {% endcomment %}
+                                    <div class="chart-loading1" id="">
+                                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+
+                                        </div>
+                                    </div>
+                                    <h2 class="my-2 d-value" data-id="page_total_actions">{{page_total_actions}}</h2>
+                                    <p class="mb-0 text-muted" title="Up 100% Compared to previous 7 days.">
+                                        <span class="text-nowrap">Page clicks</span>
+                                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span>
+                                            5.27%</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                        <a class="" data-bs-toggle="modal" id="" data-info="Page likes" onclick="callchart(this);"
+                            data-key="likes" href="#chart-modal" role="button">
+                            <div class="card tilebox-one">
+                                <div class="card-body">
+
+                                    <h5 class="text-uppercase mt-0">Page likes</h5>
+                                    {% comment %} <h6 class="text-uppercase mt-0">Date Range</h6> {% endcomment %}
+                                    <div class="chart-loading1" id="">
+                                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+
+                                        </div>
+                                    </div>
+                                    <h2 class="my-2 d-value" data-id="page_fans">{{page_fans}}</h2>
+                                    <p class="mb-0 text-muted" title="Up 100% Compared to previous 7 days.">
+                                        <span class="text-nowrap">Page likes</span>
+                                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span>
+                                            5.27%</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                        <a class="" data-bs-toggle="modal" id="" data-info="Page Reactions" onclick="callchart(this);"
+                            data-key="reactions" href="#chart-modal" role="button">
+                            <div class="card tilebox-one">
+                                <div class="card-body">
+
+                                    <h5 class="text-uppercase mt-0">Page Reactions</h5>
+                                    {% comment %} <h6 class="text-uppercase mt-0">Date Range</h6> {% endcomment %}
+                                    <div class="chart-loading1" id="">
+                                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+
+                                        </div>
+                                    </div>
+                                    <h2 class="my-2 d-value" data-id="page_actions_post_reactions_like_total">
+                                        {{page_actions_post_reactions_like_total}}</h2>
+                                    <p class="mb-0 text-muted" title="Up 100% Compared to previous 7 days.">
+                                        <span class="text-nowrap">Page Reactions</span>
+                                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span>
+                                            5.27%</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                        <a class="" data-bs-toggle="modal" id="" data-info="Page impressions" onclick="callchart(this);"
+                            data-key="impressions" href="#chart-modal" role="button">
+                            <div class="card tilebox-one">
+                                <div class="card-body">
+
+                                    <h5 class="text-uppercase mt-0">Page impressions</h5>
+                                    {% comment %} <h6 class="text-uppercase mt-0">Date Range</h6> {% endcomment %}
+                                    <div class="chart-loading1" id="">
+                                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+
+                                        </div>
+                                    </div>
+                                    <h2 class="my-2 d-value" data-id="page_impressions">{{page_impressions}}</h2>
+                                    <p class="mb-0 text-muted" title="Up 100% Compared to previous 7 days.">
+                                        <span class="text-nowrap">Page impressions</span>
+                                        <span class="text-success me-2"><span class="mdi mdi-arrow-up-bold"></span>
+                                            5.27%</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="modal fade" id="chart-modal" aria-hidden="true" aria-labelledby="" tabindex="-1">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modal-title"></h5>
+                                <select id="chart-selector" class="form-select" onchange="getchart(this)">
+                                    <option value="7">Last 7 days</option>
+                                    <option value="28">Last 28 days</option>
+                                    <option value="60">Last 60 days</option>
+                                    <option value="90">Last 90 days</option>
+                                </select>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="chart-loading" id="chart-loading">
+                                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+
+                                    </div>
+                                </div>
+
+                                <div>
+                                    {% comment %} <canvas id="myChart"></canvas> {% endcomment %}
+                                    <div class="chartWrapper">
+                                        <div class="chartAreaWrapper">
+                                            <canvas id="myChart"></canvas>
+                                        </div>
+                                        <canvas id="myChartAxis" height="300" width="0"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <!-- container -->
+
+</div>
+<!-- content -->
+
+<!-- Footer Start -->
+
+<!-- end Footer -->
+
+</div>
+
+
+
+
+</div>
+
+
+</div>
+</div>
+
+
+
+
+
+{% endblock body %}

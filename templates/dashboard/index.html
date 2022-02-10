@@ -6,10 +6,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Dashboard</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
-        <meta content="Coderthemes" name="author" />
-        <!-- App favicon -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+        <link href="assets1/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="{% static 'assets1/images/favicon.ico' %}">
 
         <!-- third party css -->
@@ -17,6 +16,10 @@
         <!-- third party css end -->
 
         <!-- App css -->
+
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/calender.css' %}">
+     
         <link href=" {% static 'assets1/css/icons.min.css' %} " rel="stylesheet" type="text/css" />
         <link href=" {% static 'assets1/css/app.min.css' %} " rel="stylesheet" type="text/css" id="light-style" />
         <link href=" {% static 'assets1/css/app-dark.min.css' %} " rel="stylesheet" type="text/css" id="dark-style" />
@@ -34,6 +37,11 @@
 </head>
 
 <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+    {% if user.is_authenticated %}
+  
+    {% else %}
+    <script>location.replace("/")</script>
+    {% endif %}
 
   <!-- container section start -->
     
@@ -45,6 +53,8 @@
             <!-- ========== Left Sidebar Start ========== -->
             <div class="leftside-menu">
     
+    
+                 
                 <!-- LOGO -->
                
                 <!-- LOGO -->
@@ -60,6 +70,7 @@
                 <div class="h-100" id="leftside-menu-container" data-simplebar>
 
                     <!--- Sidemenu -->
+                    {% if request.session.Utype == "Admin" %}
                     <ul class="side-nav">
                          <li class="side-nav-item">
                             <a href="/analyatics" aria-controls="sidebarDashboards" class="side-nav-link">
@@ -78,9 +89,22 @@
                             </a>
                     
                         </li>
-                      
                         <li class="side-nav-item">
-                            <a href="/billing" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                            <a href="/showstarttoday" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                                <i class="uil-table"></i>
+                                <span> Schdule list</span>
+                            </a>
+                    
+                        </li>
+                        <li class="side-nav-item">
+                            <a href="/user" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                                <i class="uil-table"></i>
+                                <span>User </span>
+                            </a>
+                    
+                        </li>
+                        <li class="side-nav-item">
+                            <a href="/showbill" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
                                 <i class="uil-table"></i>
                                 <span> Billing</span>
                             </a>
@@ -94,7 +118,7 @@
                     
                         </li>
                         <li class="side-nav-item">
-                            <a href="/Approvecontent" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                            <a href="/showcontent" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
                                 <i class="uil-table"></i>
                                 <span> Content </span>
                             </a>
@@ -108,21 +132,21 @@
                     
                         </li>
                         <li class="side-nav-item">
-                            <a href="/strategy" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                            <a href="/showstrategy" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
                                 <i class="uil-table"></i>
                                 <span> Strategy</span>
                             </a>
                     
                         </li>
                         <li class="side-nav-item">
-                            <a href="/calender" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                            <a href="/calendar" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
                                 <i class="uil-table"></i>
                                 <span> Calender </span>
                             </a>
                     
                         </li>
                         <li class="side-nav-item">
-                            <a href="/logo" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                            <a href="/showlogo" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
                                 <i class="uil-table"></i>
                                 <span> Logo </span>
                             </a>
@@ -132,7 +156,77 @@
                        
 
                     </ul>
+                    {% else %}
 
+
+                    <ul class="side-nav">
+                        <li class="side-nav-item">
+                           <a href="/analyatics" aria-controls="sidebarDashboards" class="side-nav-link">
+                          
+                              <i class="uil-home-alt"></i> <span> Dashboard</span>
+                           </a>
+                          
+                       </li>
+                       <li class="side-nav-title side-nav-item">Detail</li>
+
+                      
+                       <li class="side-nav-item">
+                           <a href="/analyatics" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                               <i class="uil-table"></i>
+                               <span> Analyatics</span>
+                           </a>
+                   
+                       </li>
+                    
+                       <li class="side-nav-item">
+                           <a href="/competitors" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                               <i class="uil-table"></i>
+                               <span> Market </span>
+                           </a>
+                   
+                       </li>
+                       <li class="side-nav-item">
+                           <a href="/showcontent" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                               <i class="uil-table"></i>
+                               <span> Content </span>
+                           </a>
+                   
+                       </li>
+                       <li class="side-nav-item">
+                           <a href="/socialmedia" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                               <i class="uil-table"></i>
+                               <span> Links </span>
+                           </a>
+                   
+                       </li>
+                       <li class="side-nav-item">
+                           <a href="/showstrategy" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                               <i class="uil-table"></i>
+                               <span> Strategy</span>
+                           </a>
+                   
+                       </li>
+                       <li class="side-nav-item">
+                           <a href="/calendar" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                               <i class="uil-table"></i>
+                               <span> Calender </span>
+                           </a>
+                   
+                       </li>
+                       <li class="side-nav-item">
+                           <a href="/showlogo" aria-expanded="false" aria-controls="sidebarDashboards" class="side-nav-link">
+                               <i class="uil-table"></i>
+                               <span> Logo </span>
+                           </a>
+                   
+                       </li>
+                      
+                      
+
+                   </ul>
+
+
+                       {% endif %}
                     <!-- Help Box -->
                     
                     <!-- end Help Box -->
@@ -144,6 +238,7 @@
                 <!-- Sidebar -left -->
 
             </div>
+                    
             <!-- Left Sidebar End -->
 
             <!-- ============================================================== -->
@@ -371,8 +466,6 @@
         <script src="{% static 'assets1/js/vendor/jquery-jvectormap-1.2.2.min.js' %}  "></script>
         <script src="{% static 'assets1/js/vendor/jquery-jvectormap-world-mill-en.js' %}  "></script>
         <!-- third party js ends -->
-
-        <!-- demo app -->
         <script src=" {% static 'assets1/js/pages/demo.dashboard-analytics.js' %}"></script>
         <!-- end demo js-->
 

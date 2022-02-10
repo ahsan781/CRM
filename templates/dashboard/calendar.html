@@ -1,0 +1,25 @@
+{% extends 'dashboard/index.html' %}
+{% block title %}  {% endblock title %}
+{% block body %}
+{% load static %}                       <div style='margin-top:100px ;  margin-left:300px;float:left'>
+                                                <a class="btn btn-info left" href="{% url 'calendar' %}?{{ prev_month }}"> Previous Month </a>
+                                                &nbsp&nbsp
+                                                <a class="btn btn-info right" href="{% url 'calendar' %}?{{ next_month }}"> Next Month </a>
+                                           
+                                                <a class="btn btn-info right" href="{% url 'event_new' %}" style='margin-right:10px;'> New Event </a>
+                                            
+             
+</div>
+</br>
+</br>
+</br>
+<div style='margin-top:100px ;  margin-left:300px;'>
+    <li style='color:rgb(118, 160, 236); font-size:25px; font-weight:bold;'>Scheduled videos</li>
+    <li style='color:rgb(111, 219, 90); font-size:25px; font-weight:bold;' >Posted videos</li>
+     <li style='color:rgb(238, 110, 71);font-size:25px; font-weight:bold;'>Other</li>
+
+
+</div>
+{{calendar}}
+
+{% endblock body %}

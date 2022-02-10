@@ -1,0 +1,112 @@
+{% extends 'dashboard/index.html' %}
+{% block title %} FormPage {% endblock title %}
+{% block body %}
+{% load static %}
+
+<div class="wrapper">
+       
+
+    <div class="content-page">
+      <div class="content">
+        <div class="container-fluid">
+                           
+                           <!-- start page title -->
+                           <div class="row">
+                               <div class="col-12">
+                                   <div class="page-title-box">
+                                       <div class="page-title-right">
+                                           
+                                       </div>
+                                       <h4 class="page-title">Schdule UpdateForm</h4>
+                                   </div>
+                               </div>
+                           </div> 
+                           
+                           <div class="row">
+                               <div class="col-12">
+                                   <div class="card">
+                                       <div class="card-body">
+                <form action="" method="post" autocomplete="off"  enctype="multipart/form-data">
+                  {% csrf_token %}
+                    <div class="form-group">
+                        <label style='font-weight:bold;'>First Name</label>
+                        <input type="text" class="form-control" name="fname" id="username"  value={{show.firstname}} required>
+                      </div>
+                    </br>
+                    <div class="form-group">
+                      <label style='font-weight:bold;'>last Name</label>
+                      <input type="text" class="form-control" name="lname" id="username"  value={{show.lastname}} required>
+                    </div>
+                    </br>
+                    <div class="form-group">
+                    <label style='font-weight:bold;'>Dealership Name</label>
+                    <input type="text" class="form-control" name="dealership" id="username"  value={{show.DealershipName}} required>
+                  </div>
+                  </br>
+                  <div class="form-group">
+                  <label style='font-weight:bold;'>Email Address</label>
+                  <input type="email" class="form-control" name="email" id="username"  value={{show.Emailaddress}} required>
+                </div>
+                </br>
+                <div class="form-group">
+                <label style='font-weight:bold;'>Phone No</label>
+                <input type="text" class="form-control" name="phone" id="username"  value={{show.PhoneNo }} required>
+              </div>
+              </br>
+                    <div class="form-group">
+                      <label for="userType">Help Message</label>
+                       <select name="question" class="form-control" onchange="ChangeDropdowns(this.value);">
+                              {% if show.Question == 'Schedule an Analysis'  %}
+                                 <option class="form-control" selected>Schedule an Analysis</option>
+                                 <option class="form-control" >Request a Demo</option>
+                                 <option class="form-control" >Contact Us</option>
+
+                                 {% endif %}
+                                {% if show.Question == 'Request a Demo'  %}
+                                <option class="form-control" >Schedule an Analysis</option>
+                                <option class="form-control" selected>Request a Demo</option>
+                               
+                                 <option class="form-control" >Contact Us</option>
+                                {% endif %}
+                                {% if show.Question == 'Contact Us'   %}
+                                <option class="form-control" >Schedule an Analysis</option>
+                                <option class="form-control" >Request a Demo</option>
+                                <option class="form-control" selected>Contact Us</option>
+
+                              {% endif %}
+                           
+                            </select>
+                     </div> 
+                    </br> 
+                      <div class="form-group">
+                        <label style='font-weight:bold;'>Question</label>
+                        <input type="text" class="form-control" name="help" id="email"  value={{show.help}} requihelpred>
+                      </div> 
+                    </br>
+                     
+  
+     <div class="p-t-20">
+        <button class="btn btn-primary" type="submit">Update</button>
+            </div>
+            {% for message in messages %}
+                           <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                       
+                             {% if message.tags == "success" %}
+                             <strong>Well done!</strong> {{ message}}
+                             {% else %}
+                             <strong>Error!</strong> {{ message}}
+                             {% endif %}
+                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                           </div>
+                           {% endfor %} 
+                      </form>
+    </form>
+</div>
+</div>
+</div>
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
